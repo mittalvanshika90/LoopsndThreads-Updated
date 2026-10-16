@@ -1,0 +1,12 @@
+export default function ProductCard({ product, onAddToCart }) {
+  const available = Number(product.stock ?? 1) > 0 && product.active !== false
+  return <article className="group overflow-hidden rounded-[1.75rem] border border-thread-sand/80 bg-white shadow-[0_8px_30px_rgba(68,42,57,.045)] transition duration-500 hover:-translate-y-1.5 hover:border-thread-rose/40 hover:shadow-soft">
+    <div className="relative aspect-[4/4.7] overflow-hidden bg-gradient-to-br from-thread-blush to-thread-cream">
+      <img src={product.image} alt={product.name} loading="lazy" className={`h-full w-full object-cover transition duration-700 group-hover:scale-[1.07] ${available ? '' : 'grayscale opacity-60'}`} />
+      {product.tag && <span className="absolute left-4 top-4 rounded-full border border-white/70 bg-white/90 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[.16em] text-thread-plum shadow-sm backdrop-blur-md">{product.tag}</span>}
+      {!available && <span className="absolute right-3 top-3 rounded-full bg-thread-ink px-3 py-1.5 text-xs font-semibold text-white">Out of stock</span>}
+      <div className="absolute inset-x-3 bottom-3 translate-y-3 opacity-0 transition group-hover:translate-y-0 group-hover:opacity-100 max-sm:hidden"><button disabled={!available} onClick={() => onAddToCart(product)} className="w-full rounded-full bg-thread-plum px-4 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-thread-ink disabled:cursor-not-allowed disabled:bg-gray-400">{available ? 'Add to bag +' : 'Currently unavailable'}</button></div>
+    </div>
+    <div className="p-4 sm:p-5"><p className="text-[9px] font-bold uppercase tracking-[.18em] text-thread-rose">{product.subcategory ? `${product.category} · ${product.subcategory}` : product.category}</p><div className="mt-2 flex items-start justify-between gap-3"><div><h3 className="font-display text-xl leading-snug text-thread-ink">{product.name}</h3><p className="mt-1 line-clamp-2 text-sm leading-6 text-stone-500">{product.description}</p></div><strong className="whitespace-nowrap text-lg text-thread-plum">₹{product.price}</strong></div><button onClick={() => onAddToCart(product)} disabled={!available} className="mt-4 w-full rounded-full border border-thread-plum/20 px-4 py-3.5 text-sm font-semibold text-thread-plum transition hover:bg-thread-plum hover:text-white disabled:cursor-not-allowed disabled:border-stone-200 disabled:bg-stone-100 disabled:text-stone-400 sm:hidden">{available ? 'Add to bag +' : 'Out of stock'}</button></div>
+  </article>
+}
